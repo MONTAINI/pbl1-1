@@ -1,0 +1,69 @@
+<div class="student-info">
+  <span class="student-info">{{ user.attendanceNumber }}番</span>
+  <span class="student-info">{{ user.userName }}</span>
+</div>
+
+<div id="subhead">
+  <button mat-button (click)="lastMonth()"><mat-icon>keyboard_arrow_left</mat-icon></button>
+      {{ date | date:'yyyy年MM月'}}
+  <button mat-button (click)="nextMonth()"><mat-icon>keyboard_arrow_right</mat-icon></button>
+</div>
+
+<div id=table>
+<table>
+  <thead>
+    <tr>
+      <th>日付</th>
+      <th>登校時刻</th>
+      <th>下校時刻</th>
+      <th>1限目</th>
+      <th>2限目</th>
+      <th>3限目</th>
+      <th>4限目</th>
+      <th>5限目</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let atnd of user.atnds; index as idx;">
+      <th>{{atnd.date | date:'d日 (EEE)'}}</th>
+      <td>{{atnd.cameAt}}</td>
+      <td>{{atnd.leavedAt}}</td>
+      <td [ngClass]="{ 'absent': isAbsent(atnd.atnd1), 'unknown': isUnknown(atnd.atnd1)}">
+        <mat-form-field>
+          <mat-select [(ngModel)]="atnd.atnd1" (change)="changeState(idx, {atnd1: atnd.atnd1})">
+              <mat-option *ngFor="let atndCode of atndCodes; index as idx;" [value]="idx">{{ atndCode }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td [ngClass]="{ 'absent': isAbsent(atnd.atnd2), 'unknown': isUnknown(atnd.atnd2)}">
+        <mat-form-field>
+          <mat-select [(ngModel)]="atnd.atnd2" (change)="changeState(idx, {atnd2: atnd.atnd2})">
+              <mat-option *ngFor="let atndCode of atndCodes; index as idx;" [value]="idx">{{ atndCode }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td [ngClass]="{ 'absent': isAbsent(atnd.atnd3), 'unknown': isUnknown(atnd.atnd3)}">
+        <mat-form-field>
+          <mat-select [(ngModel)]="atnd.atnd3" (change)="changeState(idx, {atnd3: atnd.atnd3})">
+              <mat-option *ngFor="let atndCode of atndCodes; index as idx;" [value]="idx">{{ atndCode }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td [ngClass]="{ 'absent': isAbsent(atnd.atnd4), 'unknown': isUnknown(atnd.atnd4)}">
+        <mat-form-field>
+          <mat-select [(ngModel)]="atnd.atnd4" (change)="changeState(idx, {atnd4: atnd.atnd4})">
+              <mat-option *ngFor="let atndCode of atndCodes; index as idx;" [value]="idx">{{ atndCode }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td [ngClass]="{ 'absent': isAbsent(atnd.atnd5), 'unknown': isUnknown(atnd.atnd5)}">
+        <mat-form-field>
+          <mat-select [(ngModel)]="atnd.atnd5" (change)="changeState(idx, {atnd5: atnd.atnd5})">
+              <mat-option *ngFor="let atndCode of atndCodes; index as idx;" [value]="idx">{{ atndCode }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
